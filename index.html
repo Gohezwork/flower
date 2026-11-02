@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Камелия | Цветочный магазин в Москве</title>
+  <meta name="description" content="Камелия — цветочный магазин в Москве. Букеты от 2 500 ₽, цветы в коробке, подписка, свадебная флористика и оформление мероприятий.">
+  <meta name="theme-color" content="#FAF7F2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&subset=cyrillic&display=swap" rel="stylesheet">
+  <style>
+    /* Отступы кратны 8. Акцент один: --accent, остальное — нейтральные тона и его светлый оттенок. */
+    :root {
+      --bg: #FAF7F2;
+      --sand: #F1ECE4;
+      --surface: #FFFFFF;
+      --ink: #171412;
+      --muted: #665D57;
+      --line: #E4DCD2;
+      --accent: #B8203F;
+      --accent-dark: #961833;
+      --accent-tint: #F8E4E6;
+      --gutter: 16px;
+      --header: 64px;
+      --section: 80px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header) + 16px); -webkit-text-size-adjust: 100%; }
+    main { overflow-x: clip; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Onest", system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; }
+    h1, h2, h3, p, ul, ol, figure, blockquote { margin: 0; padding: 0; }
+    ul, ol { list-style: none; }
+    h1, h2, h3 { font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+    h2 { font-size: clamp(32px, 9vw, 64px); }
+    h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+
+    .wrap { width: 100%; max-width: 1248px; margin-inline: auto; padding-inline: var(--gutter); }
+    .section { padding-block: var(--section); }
+    .section-head { display: grid; gap: 16px; margin-bottom: 40px; }
+    .lead { color: var(--muted); font-size: 18px; max-width: 48ch; }
+
+    .skip {
+      position: absolute; left: 16px; top: -64px; z-index: 30;
+      padding: 8px 16px; border-radius: 8px;
+      background: var(--ink); color: #fff;
+    }
+    .skip:focus { top: 8px; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 56px; padding: 16px 32px;
+      border: 0; border-radius: 40px;
+      background: var(--accent); color: #fff;
+      font: inherit; font-weight: 700; line-height: 1;
+      text-decoration: none; cursor: pointer;
+      transition: background-color .2s ease;
+    }
+    .btn:hover { background: var(--accent-dark); }
+    .btn--small { min-height: 40px; padding: 8px 16px; font-size: 14px; }
+    .btn--ink { background: var(--ink); }
+    .btn--ink:hover { background: #3A332E; }
+
+    /* Шапка */
+    .header {
+      position: sticky; top: 0; z-index: 20;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+    }
+    .header__row { display: flex; align-items: center; gap: 16px; height: var(--header); }
+    .logo { font-size: 24px; font-weight: 800; letter-spacing: -0.04em; text-decoration: none; margin-right: auto; }
+    .logo span { color: var(--accent); }
+    .nav { display: none; }
+    .header__phone {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      width: 40px; height: 40px;
+      font-weight: 600; text-decoration: none;
+    }
+    .header__phone span { display: none; }
+
+    /* Первый экран */
+    .hero__text { padding-block: 40px 40px; display: grid; gap: 24px; justify-items: start; }
+    .hero__eyebrow { font-weight: 600; font-size: 18px; }
+    .hero h1 { font-size: clamp(64px, 19vw, 144px); line-height: .95; letter-spacing: -0.05em; }
+    .hero__facts { display: grid; gap: 8px; }
+    .hero__facts li { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+    .hero__facts svg { flex: none; color: var(--accent); }
+    .hero__price { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+    .hero__price b { color: var(--accent); font-weight: 800; }
+    .hero__media { position: relative; margin-inline: calc(var(--gutter) * -1); }
+    .hero__media img { width: 100%; height: auto; aspect-ratio: 3 / 4; max-height: calc(100svh - var(--header)); object-fit: contain; }
+    .scallop {
+      position: absolute; left: 0; right: 0; bottom: -1px; height: 24px;
+      background: radial-gradient(circle at 24px 24px, var(--scallop, var(--bg)) 24px, transparent 24.5px) center bottom / 48px 24px repeat-x;
+    }
+
+    /* Лента */
+    .ticker {
+      margin-block: 40px 0;
+      transform: rotate(-2deg);
+      width: 110%; margin-left: -5%;
+      overflow: hidden;
+      background: var(--accent); color: #fff;
+    }
+    .ticker__track { display: flex; width: max-content; animation: ticker 32s linear infinite; }
+    .ticker__group { display: flex; align-items: center; gap: 32px; padding: 16px 16px; font-weight: 700; white-space: nowrap; }
+    .ticker__group i { width: 8px; height: 8px; border-radius: 50%; background: #fff; }
+    @keyframes ticker { to { transform: translateX(-50%); } }
+
+    /* Услуги */
+    .services { display: grid; gap: 16px; }
+    .service {
+      display: grid; grid-template-columns: 112px 1fr; gap: 16px;
+      padding: 8px; border-radius: 16px;
+      background: var(--surface); border: 1px solid var(--line);
+    }
+    .service__photo { border-radius: 8px; overflow: hidden; background: var(--sand); }
+    .service:nth-child(3n+1) .service__photo { background: var(--accent-tint); }
+    .service__photo img { width: 100%; height: 100%; min-height: 136px; object-fit: cover; }
+    .service__body { display: grid; align-content: center; gap: 8px; padding: 8px 8px 8px 0; }
+    .service__body p { color: var(--muted); font-size: 14px; }
+    .service__price { color: var(--ink) !important; font-size: 16px !important; font-weight: 700; }
+
+    /* Почему мы */
+    .why { background: var(--ink); color: #fff; }
+    .why .lead { color: #BDB4AD; }
+    .facts { display: grid; gap: 32px; }
+    .fact { padding-top: 24px; border-top: 1px solid #453D38; display: grid; gap: 8px; }
+    .fact__num { font-size: 64px; font-weight: 800; line-height: 1; letter-spacing: -0.04em; }
+    .fact p { color: #BDB4AD; }
+    .fact .fact__num { color: #fff; }
+
+    /* Работы */
+    .gallery {
+      display: flex; gap: 16px;
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+      padding-bottom: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gutter);
+    }
+    .work { flex: 0 0 72%; scroll-snap-align: start; }
+    .work img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 16px; background: var(--sand); }
+    .work figcaption { display: flex; justify-content: space-between; gap: 16px; padding-top: 8px; font-weight: 600; }
+    .work figcaption span { color: var(--muted); font-weight: 500; white-space: nowrap; }
+
+    /* Отзывы */
+    .reviews-wrap { position: relative; background: var(--sand); }
+    .reviews-wrap .scallop { top: -23px; bottom: auto; --scallop: var(--sand); }
+    .reviews { display: grid; gap: 16px; }
+    .review { display: grid; gap: 16px; align-content: start; padding: 24px; border-radius: 16px; background: var(--surface); }
+    .badge {
+      justify-self: start;
+      padding: 0 8px; border-radius: 8px;
+      background: var(--accent-tint); color: var(--accent-dark);
+      font-size: 14px; font-weight: 600; line-height: 24px;
+    }
+    .review blockquote { font-size: 18px; line-height: 1.4; }
+    .review cite { color: var(--muted); font-style: normal; font-size: 14px; }
+
+    /* Как добраться */
+    .route { display: grid; gap: 32px; }
+    .route__address { font-size: clamp(24px, 6vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
+    .route__list { display: grid; gap: 16px; }
+    .route__list li { display: grid; gap: 0; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+    .route__list b { font-size: 14px; font-weight: 500; color: var(--muted); }
+    .route__list span { font-weight: 600; }
+
+    /* Форма */
+    .order { background: var(--accent); color: #fff; }
+    .order__grid { display: grid; gap: 40px; }
+    .order .lead { color: #fff; }
+    .form-card { padding: 24px; border-radius: 24px; background: var(--surface); color: var(--ink); }
+    .form { display: grid; gap: 24px; }
+    .field { display: grid; gap: 8px; }
+    .field label { font-weight: 600; }
+    .field input {
+      width: 100%; height: 56px; padding: 0 16px;
+      border: 1px solid #B9AEA4; border-radius: 8px;
+      background: #fff; color: var(--ink);
+      font: inherit;
+    }
+    .field input[aria-invalid="true"] { border-color: var(--accent); border-width: 2px; }
+    .error { color: var(--accent); font-size: 14px; font-weight: 500; }
+    .error:empty { display: none; }
+    .consent { display: grid; grid-template-columns: 24px 1fr; gap: 8px 16px; align-items: start; font-size: 14px; color: var(--muted); }
+    .consent input { width: 24px; height: 24px; margin: 0; accent-color: var(--accent); }
+    .consent .error { grid-column: 1 / -1; }
+    .form .btn { width: 100%; }
+    .success { display: grid; gap: 16px; }
+    .success h3 { font-size: 32px; font-weight: 800; }
+    .success p { color: var(--muted); }
+    [hidden] { display: none !important; }
+
+    /* Подвал */
+    .footer { padding-block: 64px 32px; background: var(--ink); color: #fff; }
+    .footer__grid { display: grid; gap: 40px; }
+    .footer .logo { display: inline-block; font-size: 32px; }
+    .footer .logo span { color: #fff; }
+    .footer__about { color: #BDB4AD; margin-top: 8px; }
+    .footer__col { display: grid; gap: 8px; align-content: start; }
+    .footer__col b { color: #BDB4AD; font-size: 14px; font-weight: 500; }
+    .footer__col a { text-decoration: none; }
+    .footer__col a:hover { text-decoration: underline; }
+    .footer__bottom {
+      display: grid; gap: 8px;
+      margin-top: 40px; padding-top: 24px;
+      border-top: 1px solid #453D38;
+      color: #BDB4AD; font-size: 14px;
+    }
+
+    @media (min-width: 480px) {
+      .service { grid-template-columns: 160px 1fr; }
+      .work { flex-basis: 48%; }
+    }
+
+    @media (min-width: 768px) {
+      :root { --gutter: 32px; --section: 96px; }
+      .header__phone { width: auto; }
+      .header__phone span { display: inline; }
+      .services { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .facts { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+      .reviews { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .route { grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+      .order__grid { grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+      .form-card { padding: 40px; }
+      .footer__grid { grid-template-columns: 2fr 1fr 1fr; }
+      .footer__bottom { display: flex; justify-content: space-between; }
+      .section-head--row { grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; }
+    }
+
+    @media (min-width: 1024px) {
+      :root { --header: 72px; --section: 120px; }
+      .nav { display: flex; gap: 32px; margin-right: auto; }
+      .nav a { font-weight: 500; text-decoration: none; }
+      .nav a:hover { color: var(--accent); }
+      .logo { margin-right: 32px; }
+      .hero__grid { display: grid; grid-template-columns: 7fr 5fr; gap: 64px; align-items: stretch; }
+      .hero__text { align-content: center; padding-block: 64px; gap: 32px; }
+      .hero__media { margin-inline: 0; }
+      .hero__media img { height: 100%; aspect-ratio: auto; min-height: 640px; object-fit: cover; object-position: center; border-radius: 0 0 24px 24px; }
+      .hero__media .scallop { display: none; }
+      .ticker { margin-top: 64px; }
+      .services { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+      .service { grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: 0; padding: 8px; transition: transform .25s ease; }
+      .service:nth-child(odd) { transform: rotate(-1deg); }
+      .service:nth-child(even) { transform: rotate(1deg); }
+      .service:hover { transform: none; }
+      .service__photo img { aspect-ratio: 4 / 3; min-height: 0; height: auto; }
+      .service__body { padding: 16px; }
+      .gallery {
+        display: grid; grid-template-columns: repeat(12, 1fr); gap: 32px;
+        margin: 0; padding: 0; overflow: visible;
+      }
+      .work { grid-column: span 4; }
+      .work:nth-child(1), .work:nth-child(5) { grid-column: span 5; }
+      .work:nth-child(2), .work:nth-child(6) { grid-column: span 3; }
+      .work:nth-child(4) { grid-column: span 4; }
+      .work img { aspect-ratio: auto; height: 440px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .ticker__track { animation: none; }
+      .service, .btn { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">К содержанию</a>
+
+  <!-- ЗАГЛУШКИ: телефон, адрес, метро, часы работы, цены, факты в блоке «Почему мы», соцсети и политика.
+       Перед публикацией замените их на настоящие. Фото — временные снимки с Unsplash. -->
+  <header class="header">
+    <div class="wrap header__row">
+      <a class="logo" href="#top">Камелия<span>.</span></a>
+      <nav class="nav" aria-label="Основное меню">
+        <a href="#services">Услуги</a>
+        <a href="#works">Работы</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#route">Как добраться</a>
+      </nav>
+      <a class="header__phone" href="tel:+74950000000" aria-label="Позвонить: +7 (495) 000-00-00">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+        <span>+7 (495) 000-00-00</span>
+      </a>
+      <a class="btn btn--small" href="#order">Заказать</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero__grid">
+        <div class="hero__text">
+          <p class="hero__eyebrow">Цветочный магазин в Москве</p>
+          <h1>Камелия</h1>
+          <ul class="hero__facts">
+            <li>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21Z"/><circle cx="12" cy="9.500" r="2.500"/></svg>
+              Москва, ул. Примерная, 1
+            </li>
+            <li>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              Ежедневно с 9:00 до 21:00
+            </li>
+          </ul>
+          <p class="hero__price">Букеты от <b>2&nbsp;500&nbsp;₽</b></p>
+          <a class="btn" href="#order">Заказать</a>
+        </div>
+        <div class="hero__media">
+          <img src="https://images.unsplash.com/photo-1523694576729-dc99e9c0f9b4?auto=format&fit=crop&w=1000&q=75" width="1000" height="1333" alt="Рука держит букет белых цветов в крафтовой бумаге" fetchpriority="high">
+          <div class="scallop" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <div class="ticker__group"><span>Свежие цветы каждый день</span><i></i><span>Букеты на любой повод</span><i></i><span>Соберём за два часа</span><i></i><span>Свежие цветы каждый день</span><i></i><span>Букеты на любой повод</span><i></i><span>Соберём за два часа</span><i></i></div>
+        <div class="ticker__group"><span>Свежие цветы каждый день</span><i></i><span>Букеты на любой повод</span><i></i><span>Соберём за два часа</span><i></i><span>Свежие цветы каждый день</span><i></i><span>Букеты на любой повод</span><i></i><span>Соберём за два часа</span><i></i></div>
+      </div>
+    </div>
+
+    <section class="section" id="services" aria-labelledby="services-title">
+      <div class="wrap">
+        <div class="section-head section-head--row">
+          <h2 id="services-title">Услуги и цены</h2>
+          <p class="lead">Подберём цветы под повод и бюджет. Итоговую стоимость назовём до оплаты.</p>
+        </div>
+        <ul class="services">
+          <li class="service">
+            <div class="service__photo"><img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=70" width="600" height="450" loading="lazy" alt="Розовые тюльпаны в стеклянной вазе"></div>
+            <div class="service__body"><h3>Букет на каждый день</h3><p>Простой сезонный букет без лишнего оформления.</p><p class="service__price">от 2&nbsp;500&nbsp;₽</p></div>
+          </li>
+          <li class="service">
+            <div class="service__photo"><img src="https://images.unsplash.com/photo-1457089328109-e5d9bd499191?auto=format&fit=crop&w=600&q=70" width="600" height="450" loading="lazy" alt="Тёмный авторский букет из красных и оранжевых цветов"></div>
+            <div class="service__body"><h3>Авторский букет</h3><p>Флорист соберёт композицию под ваш повод.</p><p class="service__price">от 4&nbsp;500&nbsp;₽</p></div>
+          </li>
+          <li class="service">
+            <div class="service__photo"><img src="https://images.unsplash.com/photo-1533616688419-b7a585564566?auto=format&fit=crop&w=600&q=70" width="600" height="450" loading="lazy" alt="Яркая композиция из оранжевых и розовых цветов"></div>
+            <div class="service__body"><h3>Цветы в коробке</h3><p>Готовая композиция, которая не требует вазы.</p><p class="service__price">от 3&nbsp;900&nbsp;₽</p></div>
+          </li>
+          <li class="service">
+            <div class="service__photo"><img src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=600&q=70" width="600" height="450" loading="lazy" alt="Одна ветка с розовым цветком на сером фоне"></div>
+            <div class="service__body"><h3>Подписка на цветы</h3><p>Свежий букет домой или в офис раз в неделю.</p><p class="service__price">от 9&nbsp;000&nbsp;₽ в месяц</p></div>
+          </li>
+          <li class="service">
+            <div class="service__photo"><img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=600&q=70" width="600" height="450" loading="lazy" alt="Цветочное оформление свадебной церемонии в саду"></div>
+            <div class="service__body"><h3>Свадебная флористика</h3><p>Букет невесты, бутоньерки и оформление зала.</p><p class="service__price">от 25&nbsp;000&nbsp;₽</p></div>
+          </li>
+          <li class="service">
+            <div class="service__photo"><img src="https://images.unsplash.com/photo-1502977249166-824b3a8a4d6d?auto=format&fit=crop&w=600&q=70" width="600" height="450" loading="lazy" alt="Розовые лилии в прозрачной вазе"></div>
+            <div class="service__body"><h3>Оформление мероприятий</h3><p>Цветы для ресторанов, офисов и частных событий.</p><p class="service__price">от 15&nbsp;000&nbsp;₽</p></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section why" aria-labelledby="why-title">
+      <div class="wrap">
+        <div class="section-head section-head--row">
+          <h2 id="why-title">Почему выбирают нас</h2>
+          <p class="lead">Три простых обещания, которые мы держим для каждого заказа.</p>
+        </div>
+        <ul class="facts">
+          <li class="fact"><p class="fact__num">3 раза</p><h3>в неделю поставки</h3><p>Поэтому цветы в витрине не застаиваются.</p></li>
+          <li class="fact"><p class="fact__num">2 часа</p><h3>на сборку букета</h3><p>Успеем к сегодняшнему вечеру, если вы заказали днём.</p></li>
+          <li class="fact"><p class="fact__num">0 ₽</p><h3>за замену</h3><p>Если букет вам не понравился, соберём новый бесплатно.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="works" aria-labelledby="works-title">
+      <div class="wrap">
+        <div class="section-head section-head--row">
+          <h2 id="works-title">Наши работы</h2>
+          <p class="lead">Несколько букетов, чтобы понять наш стиль. Похожий соберём для вас.</p>
+        </div>
+        <div class="gallery" tabindex="0" role="region" aria-label="Фото работ, прокручивается по горизонтали">
+          <figure class="work"><img src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=900&q=75" width="900" height="1125" loading="lazy" alt="Пышный букет из кремовых роз, ягод и зелени"><figcaption>Садовый <span>6&nbsp;500&nbsp;₽</span></figcaption></figure>
+          <figure class="work"><img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=700&q=75" width="700" height="875" loading="lazy" alt="Нежный бело-розовый букет на деревянном столе"><figcaption>Нежность <span>4&nbsp;900&nbsp;₽</span></figcaption></figure>
+          <figure class="work"><img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=75" width="800" height="1000" loading="lazy" alt="Руки держат цветы, выложенные в форме сердца"><figcaption>Сердце <span>5&nbsp;200&nbsp;₽</span></figcaption></figure>
+          <figure class="work"><img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=75" width="800" height="1000" loading="lazy" alt="Красная роза крупным планом"><figcaption>Алая роза <span>700&nbsp;₽</span></figcaption></figure>
+          <figure class="work"><img src="https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=900&q=75" width="900" height="1125" loading="lazy" alt="Пудровая роза на тёмном фоне"><figcaption>Пудра <span>900&nbsp;₽</span></figcaption></figure>
+          <figure class="work"><img src="https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=700&q=75" width="700" height="875" loading="lazy" alt="Розовый тюльпан на розовом фоне"><figcaption>Тюльпан <span>300&nbsp;₽</span></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reviews-wrap" id="reviews" aria-labelledby="reviews-title">
+      <div class="scallop" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="section-head section-head--row">
+          <h2 id="reviews-title">Отзывы</h2>
+          <p class="lead">Это примеры, а не настоящие отзывы. Замените их на отзывы клиентов.</p>
+        </div>
+        <ul class="reviews">
+          <li class="review"><span class="badge">пример</span><blockquote>Заказала букет маме на юбилей. Спросили о её любимых цветах и прислали фото перед доставкой.</blockquote><cite>Имя клиента</cite></li>
+          <li class="review"><span class="badge">пример</span><blockquote>Позвонил за три часа до свидания. Успели собрать, и букет простоял больше недели.</blockquote><cite>Имя клиента</cite></li>
+          <li class="review"><span class="badge">пример</span><blockquote>Оформляем у вас цветы в офис по подписке. Каждую неделю новый букет, и ни разу не повторились.</blockquote><cite>Имя клиента</cite></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="route" aria-labelledby="route-title">
+      <div class="wrap route">
+        <div class="section-head" style="margin:0">
+          <h2 id="route-title">Как добраться</h2>
+          <p class="route__address">Москва, ул. Примерная, 1</p>
+          <p class="lead">Заходите посмотреть цветы вживую или заберите готовый заказ.</p>
+          <div><a class="btn btn--ink" href="https://yandex.ru/maps/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D1%83%D0%BB.%20%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%2C%201" target="_blank" rel="noopener">Открыть в Яндекс Картах</a></div>
+        </div>
+        <ul class="route__list">
+          <li><b>Метро</b><span>«Примерная», 5 минут пешком</span></li>
+          <li><b>Часы работы</b><span>Ежедневно с 9:00 до 21:00</span></li>
+          <li><b>Телефон</b><span><a href="tel:+74950000000">+7 (495) 000-00-00</a></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section order" id="order" aria-labelledby="order-title">
+      <div class="wrap order__grid">
+        <div class="section-head" style="margin:0">
+          <h2 id="order-title">Заказать букет</h2>
+          <p class="lead">Оставьте имя и телефон. Флорист перезвонит, уточнит состав и доставку.</p>
+        </div>
+        <div class="form-card">
+          <form class="form" id="order-form" novalidate>
+            <div class="field">
+              <label for="name">Имя</label>
+              <input id="name" name="name" type="text" autocomplete="given-name" required aria-describedby="name-error">
+              <p class="error" id="name-error" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="phone">Телефон</label>
+              <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required aria-describedby="phone-error">
+              <p class="error" id="phone-error" aria-live="polite"></p>
+            </div>
+            <div class="consent">
+              <input id="consent" name="consent" type="checkbox" required aria-describedby="consent-error">
+              <label for="consent">Даю согласие на обработку персональных данных по <a href="#">политике конфиденциальности</a></label>
+              <p class="error" id="consent-error" aria-live="polite"></p>
+            </div>
+            <button class="btn" type="submit">Заказать</button>
+          </form>
+          <div class="success" id="order-success" tabindex="-1" hidden>
+            <h3>Заявка принята</h3>
+            <p id="order-success-text"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div>
+          <a class="logo" href="#top">Камелия<span>.</span></a>
+          <p class="footer__about">Цветочный магазин в Москве</p>
+        </div>
+        <div class="footer__col">
+          <b>Контакты</b>
+          <a href="tel:+74950000000">+7 (495) 000-00-00</a>
+          <span>Москва, ул. Примерная, 1</span>
+          <span>Ежедневно с 9:00 до 21:00</span>
+        </div>
+        <div class="footer__col">
+          <b>Разделы</b>
+          <a href="#services">Услуги и цены</a>
+          <a href="#works">Работы</a>
+          <a href="#route">Как добраться</a>
+          <a href="#">Telegram</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Камелия</span>
+        <a href="#">Политика конфиденциальности</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var form = document.getElementById('order-form');
+      var name = document.getElementById('name');
+      var phone = document.getElementById('phone');
+      var consent = document.getElementById('consent');
+      var success = document.getElementById('order-success');
+      var phoneDigits = '';
+
+      function formatPhone(d) {
+        if (!d) return '';
+        var out = '+7 (' + d.slice(0, 3);
+        if (d.length >= 3) out += ') ' + d.slice(3, 6);
+        if (d.length >= 6) out += '-' + d.slice(6, 8);
+        if (d.length >= 8) out += '-' + d.slice(8, 10);
+        return out;
+      }
+
+      phone.addEventListener('input', function (e) {
+        var d = phone.value.replace(/\D/g, '');
+        if (phone.value.indexOf('+7') === 0) d = d.slice(1);
+        else if (/^[78]/.test(d)) d = d.slice(1);
+        d = d.slice(0, 10);
+        // Backspace попал на скобку или дефис: убираем последнюю цифру
+        if (e.inputType === 'deleteContentBackward' && d === phoneDigits) d = d.slice(0, -1);
+        phoneDigits = d;
+        phone.value = formatPhone(d);
+      });
+
+      function setError(input, message) {
+        document.getElementById(input.id + '-error').textContent = message;
+        if (message) input.setAttribute('aria-invalid', 'true');
+        else input.removeAttribute('aria-invalid');
+        return !message;
+      }
+
+      function validate() {
+        var ok = [
+          setError(name, name.value.trim().length >= 2 ? '' : 'Напишите имя'),
+          setError(phone, phoneDigits.length === 10 ? '' : 'Введите телефон полностью'),
+          setError(consent, consent.checked ? '' : 'Нужно согласие, чтобы мы могли перезвонить')
+        ];
+        return ok.indexOf(false) === -1;
+      }
+
+      [name, phone, consent].forEach(function (input) {
+        input.addEventListener('change', function () {
+          if (input.getAttribute('aria-invalid')) validate();
+        });
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!validate()) {
+          form.querySelector('[aria-invalid="true"]').focus();
+          return;
+        }
+        // Заявка пока никуда не отправляется: здесь нужен запрос в Telegram-бот, почту или CRM.
+        document.getElementById('order-success-text').textContent =
+          name.value.trim() + ', спасибо! Флорист перезвонит на номер ' + phone.value + '.';
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+      });
+    })();
+  </script>
+</body>
+</html>
